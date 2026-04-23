@@ -1,0 +1,63 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Next.js
+.next
+out
+next-env.d.ts
+
+# Build outputs
+dist
+build
+*.tsbuildinfo
+
+# Environment
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Testing
+coverage
+.nyc_output
+playwright-report
+test-results
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Prisma
+prisma/*.db
+prisma/*.db-journal
+
+# Data (never commit real fetched data — only small fixtures)
+data/cache/
+data/runs/
+data/storage/
+
+# Python (for data-investigation scripts)
+__pycache__
+*.pyc
+.venv
+.pytest_cache
+
+# Claude agent scratchpad (Claude's own memory is elsewhere)
+.claude/projects/
+.claude/todos/

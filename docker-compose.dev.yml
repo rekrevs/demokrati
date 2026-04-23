@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: demokrati-pg-dev
+    environment:
+      POSTGRES_USER: demokrati
+      POSTGRES_PASSWORD: demokrati
+      POSTGRES_DB: demokrati
+    ports:
+      - "5432:5432"
+    volumes:
+      - demokrati_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U demokrati"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: demokrati-redis-dev
+    ports:
+      - "6379:6379"
+    volumes:
+      - demokrati_redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  demokrati_pgdata:
+  demokrati_redisdata:

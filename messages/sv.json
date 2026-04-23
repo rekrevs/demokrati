@@ -1,0 +1,21 @@
+{
+  "home": {
+    "title": "demokrati",
+    "tagline": "AI som lins, påverkansmotor och styrningsobjekt",
+    "acts": {
+      "lens": {
+        "title": "Akt I — AI som demokratisk lins",
+        "description": "Hur AI kan göra politik, beslut och konflikter mer begripliga."
+      },
+      "influence": {
+        "title": "Akt II — AI som påverkansmotor",
+        "description": "Hur AI förändrar politisk kommunikation, framing och opinionsbildning."
+      },
+      "governance": {
+        "title": "Akt III — AI som styrningsobjekt",
+        "description": "Hur AI själv måste formas av demokratiska principer."
+      }
+    },
+    "disclaimer": "Dessa demos visar möjligheter och risker med AI i demokratins informationsmiljö. De är inte röstningsrådgivare, kampanjverktyg eller automatiserade beslutsstöd. Alla syntetiska exempel är märkta som syntetiska."
+  }
+}

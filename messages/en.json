@@ -1,0 +1,21 @@
+{
+  "home": {
+    "title": "demokrati",
+    "tagline": "AI as lens, engine of influence, and object of governance",
+    "acts": {
+      "lens": {
+        "title": "Act I — AI as a democratic lens",
+        "description": "How AI can make politics, decisions, and conflicts more intelligible."
+      },
+      "influence": {
+        "title": "Act II — AI as an engine of influence",
+        "description": "How AI reshapes political communication, framing, and opinion-making."
+      },
+      "governance": {
+        "title": "Act III — AI as an object of governance",
+        "description": "How AI itself must be shaped by democratic principles."
+      }
+    },
+    "disclaimer": "These demos illustrate opportunities and risks for AI in the democratic information environment. They are not voting advisors, campaign tools, or automated decision support. All synthetic examples are labelled as synthetic."
+  }
+}

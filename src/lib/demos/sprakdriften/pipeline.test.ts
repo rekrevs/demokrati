@@ -41,17 +41,13 @@ function makeRouter(): ModelRouter {
         answers: [
           {
             language: "sv",
-            answerOriginal: "ignored by caller",
-            answerSv: "ignored by caller",
-            tone: "neutral",
+            tone: "analytical",
             framing: ["institutional"],
             institutionsMentioned: ["Riksdagen"],
             certaintyLevel: "medium",
           },
           {
             language: "en",
-            answerOriginal: "ignored by caller",
-            answerSv: "ignored by caller",
             tone: "informative",
             framing: ["legal"],
             institutionsMentioned: ["Parliament"],
@@ -100,6 +96,12 @@ describe("runSprakdriftenPipeline", () => {
     // Back-translation for Swedish is a no-op (same language), English gets back-translated.
     expect(out.answers[0].answerSv).toBe(out.answers[0].answerOriginal);
     expect(out.answers[1].answerSv).toBe("BACKTRANSLATED");
+    // questionInTarget: Swedish is identity, English gets the mock translation
+    expect(out.answers[0].questionInTarget).toBe(input.questionSv);
+    expect(out.answers[1].questionInTarget).toMatch(/^TRANSLATED:/);
+    // Tone must be within the constrained enum
+    expect(out.answers[0].tone).toBe("analytical");
+    expect(out.answers[1].tone).toBe("informative");
     expect(out.observedDifferences).toHaveLength(1);
     expect(out.internalVariationIndex).toBeCloseTo(0.42);
 

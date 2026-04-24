@@ -41,7 +41,34 @@
     "method_model": "Modellprofil",
     "method_promptVersions": "Prompt-versioner",
     "method_runId": "Kör-ID",
-    "dirDisclaimer": "Detta är observerade variationer på text, inte ett vetenskapligt mått på bias.",
+    "method_toneExplainer": "Ton",
+    "method_toneExplainerBody": "Tonen sätts av jämförelse-modellen som en av sex etiketter: informativ (neutral fakta/kontext), analyserande (väger avvägningar), balanserad (visar flera sidor explicit), försiktig (genomgående hedgad), bestämd (självsäkra direkta påståenden), pläderande (tar position). Heuristik, inte mätning.",
+    "method_certaintyExplainer": "Säkerhet",
+    "method_certaintyExplainerBody": "Säkerhet beskriver hur bestämt texten själv talar — inte modellens förtroende för innehållet. Hög = övervägande direkta påståenden, få hedgar. Medel = blandning av påståenden och reservationer. Låg = genomgående hedgad.",
+    "questionInTargetLabel": "Fråga på målspråk",
+    "answerOriginalLabel": "Svar ({language})",
+    "answerSvLabel": "Svar (översatt till svenska)",
+    "toneLabel": "Ton",
+    "framingLabel": "Ramar",
+    "institutionsLabel": "Nämnda institutioner",
+    "toneLabels": {
+      "informative": "informativ",
+      "analytical": "analyserande",
+      "balanced": "balanserad",
+      "cautious": "försiktig",
+      "assertive": "bestämd",
+      "advocating": "pläderande"
+    },
+    "certaintyLabels": {
+      "low": "låg",
+      "medium": "medel",
+      "high": "hög"
+    },
+    "statusLabel": "Status",
+    "runId": "Kör-ID",
+    "completedAt": "klar",
+    "backToDemo": "Tillbaka till exempel",
+    "dirDisclaimer": "Detta är observerade variationer på text, inte ett vetenskapligt mått på bias. Etiketter för ton och säkerhet är heuristiska — se metodrutan.",
     "backToHome": "Tillbaka"
   }
 }

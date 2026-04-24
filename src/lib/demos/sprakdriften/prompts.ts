@@ -4,7 +4,7 @@ export const PROMPT_VERSIONS = {
   translate: "v1",
   answer: "v1",
   backTranslate: "v1",
-  compare: "v2",
+  compare: "v3",
 } as const;
 
 const LANGUAGE_NAMES_ENGLISH: Record<SprakdriftenLanguage, string> = {
@@ -97,9 +97,13 @@ export function comparePrompt(args: {
     payload,
     "",
     "Produce a compact JSON object with these keys:",
-    "- answers: array of { language, tone, framing (array of short labels like 'precautionary', 'economic', 'rights-based'), institutionsMentioned (array of institution names), certaintyLevel ('low'|'medium'|'high') }. Do NOT include the full answer text — only the analytical fields.",
-    "- observedDifferences: array of { dimension (e.g. 'tone', 'institutional reference', 'risk framing', 'audience assumption'), description, evidence: array of { language, quote } } where each quote is a SHORT (<160 chars) verbatim excerpt from the provided text.",
-    "- internalVariationIndex: number 0..1, how much variation you see across languages.",
+    "- answers: array of { language, tone, framing, institutionsMentioned, certaintyLevel }. Do NOT include any answer text fields — only these analytical fields.",
+    "  - tone: exactly one of 'informative' (neutral facts/context), 'analytical' (weighs trade-offs), 'balanced' (explicitly presents multiple views), 'cautious' (pervasively hedged), 'assertive' (confident direct claims), 'advocating' (takes a position or recommends).",
+    "  - framing: 2–5 short labels like 'precautionary', 'economic', 'rights-based', 'institutional', 'security', 'technical'. Open vocabulary.",
+    "  - institutionsMentioned: specific institutions explicitly named in the text (parties, agencies, governments, bodies). Empty array if none.",
+    "  - certaintyLevel: heuristic read of the text itself — 'high' = mostly direct claims with few hedges, 'medium' = mix of claims and qualifiers, 'low' = pervasively hedged. NOT your confidence in the content.",
+    "- observedDifferences: array of { dimension (e.g. 'tone', 'institutional reference', 'risk framing', 'audience assumption'), description, evidence: array of { language, quote } } where each quote is a SHORT (<160 chars) verbatim excerpt from the provided Swedish text.",
+    "- internalVariationIndex: number 0..1, your overall sense of variation across languages. Used for internal sorting, not shown as science.",
     "Cap at 6 observedDifferences. Keep descriptions under 240 characters. Only include differences you can back with a literal quote.",
   ].join("\n");
 

@@ -80,7 +80,14 @@ const compareSchema = z.object({
     .array(
       z.object({
         language: z.string(),
-        tone: z.string(),
+        tone: z.enum([
+          "informative",
+          "analytical",
+          "balanced",
+          "cautious",
+          "assertive",
+          "advocating",
+        ]),
         framing: z.array(z.string()),
         institutionsMentioned: z.array(z.string()),
         certaintyLevel: z.enum(["low", "medium", "high"]),
@@ -183,6 +190,7 @@ export async function runSprakdriftenPipeline(
     }
     return {
       language: lang,
+      questionInTarget: stage.questionInTarget,
       answerOriginal: stage.answerOriginal,
       answerSv: stage.answerSv,
       tone: analytic.tone,

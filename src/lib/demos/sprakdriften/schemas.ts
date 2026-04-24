@@ -13,6 +13,32 @@ export type SprakdriftenLanguage = (typeof SPRAKDRIFTEN_LANGUAGES)[number];
 export const SPRAKDRIFTEN_STYLES = ["overview", "policy", "pros-and-cons"] as const;
 export type SprakdriftenStyle = (typeof SPRAKDRIFTEN_STYLES)[number];
 
+/**
+ * Tone labels the comparison-step LLM must pick from. Small, orthogonal
+ * set chosen for political/policy text. These are LLM-assigned heuristic
+ * labels — not measurements. See docs/demos/sprakdriften.md.
+ */
+export const SPRAKDRIFTEN_TONES = [
+  "informative",
+  "analytical",
+  "balanced",
+  "cautious",
+  "assertive",
+  "advocating",
+] as const;
+export type SprakdriftenTone = (typeof SPRAKDRIFTEN_TONES)[number];
+
+/**
+ * Certainty level is a heuristic assessment of how confidently the answer
+ * text itself speaks, derived from the comparison-step LLM's reading:
+ *   - high   — mostly direct claims, few hedges
+ *   - medium — mix of claims and qualifiers
+ *   - low    — pervasively hedged
+ * It is NOT the model's epistemic confidence about the content.
+ */
+export const SPRAKDRIFTEN_CERTAINTIES = ["low", "medium", "high"] as const;
+export type SprakdriftenCertainty = (typeof SPRAKDRIFTEN_CERTAINTIES)[number];
+
 export const sprakdriftenInputSchema = z.object({
   /** Canonical Swedish question. */
   questionSv: z
@@ -31,16 +57,18 @@ export const DEFAULT_SPRAKDRIFTEN_STYLE: SprakdriftenStyle = "overview";
 
 export type SprakdriftenInput = z.infer<typeof sprakdriftenInputSchema>;
 
-const confidenceEnum = z.enum(["low", "medium", "high"]);
-
 export const sprakdriftenAnswerSchema = z.object({
   language: z.enum(SPRAKDRIFTEN_LANGUAGES),
+  /** The Swedish question rendered into the target language. */
+  questionInTarget: z.string(),
+  /** Answer produced by the model in the target language, before back-translation. */
   answerOriginal: z.string(),
+  /** Answer back-translated into Swedish (canonical Swedish rendering). */
   answerSv: z.string(),
-  tone: z.string(),
+  tone: z.enum(SPRAKDRIFTEN_TONES),
   framing: z.array(z.string()),
   institutionsMentioned: z.array(z.string()),
-  certaintyLevel: confidenceEnum,
+  certaintyLevel: z.enum(SPRAKDRIFTEN_CERTAINTIES),
 });
 
 export const sprakdriftenDifferenceSchema = z.object({

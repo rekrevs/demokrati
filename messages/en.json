@@ -41,7 +41,34 @@
     "method_model": "Model profile",
     "method_promptVersions": "Prompt versions",
     "method_runId": "Run id",
-    "dirDisclaimer": "These are observed textual variations, not a scientific measure of bias.",
+    "method_toneExplainer": "Tone",
+    "method_toneExplainerBody": "Tone is assigned by the comparison model as one of six labels: informative (neutral facts/context), analytical (weighs trade-offs), balanced (explicitly multi-sided), cautious (pervasively hedged), assertive (confident direct claims), advocating (takes a position). Heuristic, not measurement.",
+    "method_certaintyExplainer": "Certainty",
+    "method_certaintyExplainerBody": "Certainty describes how confidently the text itself speaks — not the model's confidence in the content. High = mostly direct claims, few hedges. Medium = mix of claims and qualifiers. Low = pervasively hedged.",
+    "questionInTargetLabel": "Question in target language",
+    "answerOriginalLabel": "Answer ({language})",
+    "answerSvLabel": "Answer (back-translated to Swedish)",
+    "toneLabel": "Tone",
+    "framingLabel": "Framing",
+    "institutionsLabel": "Institutions mentioned",
+    "toneLabels": {
+      "informative": "informative",
+      "analytical": "analytical",
+      "balanced": "balanced",
+      "cautious": "cautious",
+      "assertive": "assertive",
+      "advocating": "advocating"
+    },
+    "certaintyLabels": {
+      "low": "low",
+      "medium": "medium",
+      "high": "high"
+    },
+    "statusLabel": "Status",
+    "runId": "Run id",
+    "completedAt": "completed",
+    "backToDemo": "Back to examples",
+    "dirDisclaimer": "These are observed textual variations, not a scientific measure of bias. Tone and certainty labels are heuristic — see the methods panel.",
     "backToHome": "Back"
   }
 }

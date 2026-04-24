@@ -1,0 +1,198 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector]
+}
+
+enum Visibility {
+  PUBLIC
+  BETA
+  HIDDEN
+}
+
+enum RunMode {
+  FEATURED
+  EXPLORE
+  STAGE
+}
+
+enum RunStatus {
+  QUEUED
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum SourceType {
+  RIKSDAG_ANFORANDE
+  PARTI_PROGRAM
+  MYNDIGHETSBESLUT
+  KOMMUNALT_BESLUT
+  SYNTHETIC
+  USER_INPUT
+}
+
+enum ArtifactType {
+  JSON
+  PNG
+  HTML
+  SHARE_CARD
+  EXPORT
+}
+
+enum FeedbackSentiment {
+  POSITIVE
+  NEUTRAL
+  NEGATIVE
+}
+
+model Demo {
+  slug           String     @id
+  title          String
+  visibility     Visibility @default(HIDDEN)
+  currentVersion String     @default("v0.1.0")
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  scenarios      Scenario[]
+  runs           Run[]
+  promptVersions PromptVersion[]
+  feedback       Feedback[]
+
+  @@map("demos")
+}
+
+model Scenario {
+  id          String   @id @default(cuid())
+  demoSlug    String
+  slug        String
+  title       String
+  description String?
+  inputJson   Json
+  isFeatured  Boolean  @default(false)
+  isPublic    Boolean  @default(true)
+  tags        String[] @default([])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  demo Demo  @relation(fields: [demoSlug], references: [slug], onDelete: Cascade)
+  runs Run[]
+
+  @@unique([demoSlug, slug])
+  @@index([demoSlug, isFeatured])
+  @@map("scenarios")
+}
+
+model Run {
+  id              String    @id @default(cuid())
+  demoSlug        String
+  scenarioId      String?
+  mode            RunMode
+  status          RunStatus @default(QUEUED)
+  inputHash       String
+  inputJson       Json
+  outputJson      Json?
+  errorJson       Json?
+  startedAt       DateTime?
+  completedAt     DateTime?
+  tokenIn         Int       @default(0)
+  tokenOut        Int       @default(0)
+  providerSummary Json?
+  cacheKey        String?
+  createdAt       DateTime  @default(now())
+
+  demo      Demo       @relation(fields: [demoSlug], references: [slug], onDelete: Cascade)
+  scenario  Scenario?  @relation(fields: [scenarioId], references: [id], onDelete: SetNull)
+  artifacts Artifact[]
+  feedback  Feedback[]
+
+  @@index([demoSlug, status])
+  @@index([cacheKey])
+  @@index([createdAt])
+  @@map("runs")
+}
+
+model PromptVersion {
+  id         String   @id @default(cuid())
+  demoSlug   String
+  name       String
+  version    String
+  template   String
+  schemaJson Json?
+  createdAt  DateTime @default(now())
+
+  demo Demo @relation(fields: [demoSlug], references: [slug], onDelete: Cascade)
+
+  @@unique([demoSlug, name, version])
+  @@map("prompt_versions")
+}
+
+model SourceDoc {
+  id             String     @id @default(cuid())
+  sourceType     SourceType
+  externalId     String
+  title          String
+  url            String?
+  publishedAt    DateTime?
+  metadataJson   Json?
+  rawStoragePath String?
+  parsedText     String?
+  fetchedAt      DateTime   @default(now())
+
+  chunks SourceChunk[]
+
+  @@unique([sourceType, externalId])
+  @@index([sourceType, publishedAt])
+  @@map("source_docs")
+}
+
+model SourceChunk {
+  id           String                       @id @default(cuid())
+  sourceDocId  String
+  chunkIndex   Int
+  text         String
+  metadataJson Json?
+  embedding    Unsupported("vector(1536)")?
+  createdAt    DateTime                     @default(now())
+
+  sourceDoc SourceDoc @relation(fields: [sourceDocId], references: [id], onDelete: Cascade)
+
+  @@unique([sourceDocId, chunkIndex])
+  @@map("source_chunks")
+}
+
+model Artifact {
+  id           String       @id @default(cuid())
+  runId        String
+  type         ArtifactType
+  storagePath  String
+  metadataJson Json?
+  createdAt    DateTime     @default(now())
+
+  run Run @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@index([runId])
+  @@map("artifacts")
+}
+
+model Feedback {
+  id        String            @id @default(cuid())
+  runId     String?
+  demoSlug  String
+  sentiment FeedbackSentiment
+  note      String?
+  createdAt DateTime          @default(now())
+
+  run  Run? @relation(fields: [runId], references: [id], onDelete: SetNull)
+  demo Demo @relation(fields: [demoSlug], references: [slug], onDelete: Cascade)
+
+  @@index([demoSlug, sentiment])
+  @@index([createdAt])
+  @@map("feedback")
+}

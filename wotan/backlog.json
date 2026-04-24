@@ -7,7 +7,7 @@
     {"id": "T-0003", "status": "BLOCKED", "size": "M", "summary": "Verify SND partiprogram access, formats, and license", "blocker": "Same: subagent cannot trigger permission prompts. Run from main-agent context."},
     {"id": "T-0004", "status": "READY", "size": "S", "summary": "Add demokrati.janson.org A-record via HostUp UAPI"},
     {"id": "T-0005", "status": "DONE", "size": "M", "summary": "Scaffold Next.js + TypeScript + Tailwind + shadcn/ui + next-intl (sv/en/ar with RTL)"},
-    {"id": "T-0006", "status": "READY", "size": "M", "summary": "Set up Prisma schema with pgvector and BullMQ worker process", "after": ["T-0005"]},
+    {"id": "T-0006", "status": "DONE", "size": "M", "summary": "Set up Prisma schema with pgvector and BullMQ worker process", "after": ["T-0005"]},
     {"id": "T-0007", "status": "READY", "size": "M", "summary": "Build model router with provider abstraction and profile system", "after": ["T-0005"]},
     {"id": "T-0008", "status": "BLOCKED", "size": "M", "summary": "Build DemoModule interface and unified run pipeline with caching", "after": ["T-0006", "T-0007"]},
     {"id": "T-0009", "status": "BLOCKED", "size": "M", "summary": "Build shared UI components and admin auth with rate limits/hCaptcha", "after": ["T-0005"]},

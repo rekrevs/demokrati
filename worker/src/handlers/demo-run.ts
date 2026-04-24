@@ -1,17 +1,15 @@
 import type { Job } from "bullmq";
+import { registerAllDemos } from "@/lib/demos";
+import { executeRun } from "@/lib/demos/pipeline";
 import { demoRunJobSchema, type DemoRunJob } from "@/lib/queue/types";
+
+registerAllDemos();
 
 export async function handleDemoRun(
   rawJob: unknown,
-): Promise<{ runId: string; status: "COMPLETED"; ranAt: string }> {
+): Promise<{ runId: string; result: unknown }> {
   const job = rawJob as Job<DemoRunJob>;
   const parsed = demoRunJobSchema.parse(job.data);
-
-  // Demo-specific pipeline dispatch lives in T-0008; this handler is
-  // intentionally a pass-through for now so the worker contract is stable.
-  return {
-    runId: parsed.runId,
-    status: "COMPLETED",
-    ranAt: new Date().toISOString(),
-  };
+  const result = await executeRun(parsed.runId);
+  return { runId: parsed.runId, result };
 }

@@ -1,4 +1,9 @@
-import "server-only";
+// No `server-only` import here: the worker process (tsx) imports this
+// module to construct a router inside `executeRun`, and raw Node lacks
+// the React Server Components flag that `server-only` checks. Client
+// leakage is still prevented by the fact that concrete usage of this
+// module happens only in server routes and the worker; UI components
+// import types directly from `lib/demos/sprakdriften/schemas`.
 import { env } from "../env";
 import { AnthropicAdapter } from "./providers/anthropic";
 import { GoogleAdapter } from "./providers/google";

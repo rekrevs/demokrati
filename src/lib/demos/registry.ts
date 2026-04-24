@@ -3,11 +3,10 @@ import type { DemoModule } from "./module";
 const registry = new Map<string, DemoModule>();
 
 export function registerDemo(mod: DemoModule): void {
-  if (registry.has(mod.id) && registry.get(mod.id) !== mod) {
-    throw new Error(
-      `Demo module "${mod.id}" is already registered with a different instance.`,
-    );
-  }
+  // Overwrite an existing registration with the same id. This keeps the
+  // registry stable across HMR reloads (which produce new module instances
+  // with the same id) and across the pattern where multiple entry points
+  // call registerAllDemos().
   registry.set(mod.id, mod);
 }
 

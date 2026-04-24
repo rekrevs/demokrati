@@ -4,7 +4,7 @@ export const PROMPT_VERSIONS = {
   translate: "v1",
   answer: "v1",
   backTranslate: "v1",
-  compare: "v1",
+  compare: "v2",
 } as const;
 
 const LANGUAGE_NAMES_ENGLISH: Record<SprakdriftenLanguage, string> = {
@@ -96,12 +96,11 @@ export function comparePrompt(args: {
     "Answers (back-translated into Swedish):",
     payload,
     "",
-    "Produce a JSON object with these keys:",
-    "- answers: array of { language, answerOriginal, answerSv, tone, framing (array of labels like 'precautionary', 'economic', 'rights-based'), institutionsMentioned (array of institution names), certaintyLevel ('low'|'medium'|'high') }.",
-    "  - You only have the Swedish (back-translated) text here; set answerOriginal to the same Swedish text. The caller will fill in the non-Swedish originals.",
-    "- observedDifferences: array of { dimension (e.g. 'tone', 'institutional reference', 'risk framing', 'audience assumption'), description, evidence: array of { language, quote } }.",
+    "Produce a compact JSON object with these keys:",
+    "- answers: array of { language, tone, framing (array of short labels like 'precautionary', 'economic', 'rights-based'), institutionsMentioned (array of institution names), certaintyLevel ('low'|'medium'|'high') }. Do NOT include the full answer text — only the analytical fields.",
+    "- observedDifferences: array of { dimension (e.g. 'tone', 'institutional reference', 'risk framing', 'audience assumption'), description, evidence: array of { language, quote } } where each quote is a SHORT (<160 chars) verbatim excerpt from the provided text.",
     "- internalVariationIndex: number 0..1, how much variation you see across languages.",
-    "Only include differences you can back with a literal quote from the provided text.",
+    "Cap at 6 observedDifferences. Keep descriptions under 240 characters. Only include differences you can back with a literal quote.",
   ].join("\n");
 
   return { system, user };

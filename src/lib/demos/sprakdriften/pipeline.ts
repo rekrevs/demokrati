@@ -80,8 +80,6 @@ const compareSchema = z.object({
     .array(
       z.object({
         language: z.string(),
-        answerOriginal: z.string(),
-        answerSv: z.string(),
         tone: z.string(),
         framing: z.array(z.string()),
         institutionsMentioned: z.array(z.string()),
@@ -121,7 +119,7 @@ async function compareAnswers(
       system,
       messages: [{ role: "user", content: user }],
       temperature: 0.2,
-      maxTokens: 1800,
+      maxTokens: 2500,
     },
     compareSchema,
   );

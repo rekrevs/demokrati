@@ -13,11 +13,12 @@ export * from "./cache-key";
  * points. Each demo is imported here so the registry is stable after a
  * single import.
  */
+import { registerDemo } from "./registry";
+import { sprakdriften } from "./sprakdriften";
+
 let registered = false;
 export function registerAllDemos(): void {
   if (registered) return;
-  // Demo modules land here as they are built:
-  // import("./sprakdriften").then(({ sprakdriften }) => registerDemo(sprakdriften));
-  // ...
+  registerDemo(sprakdriften as Parameters<typeof registerDemo>[0]);
   registered = true;
 }

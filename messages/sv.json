@@ -17,5 +17,31 @@
       }
     },
     "disclaimer": "Dessa demos visar möjligheter och risker med AI i demokratins informationsmiljö. De är inte röstningsrådgivare, kampanjverktyg eller automatiserade beslutsstöd. Alla syntetiska exempel är märkta som syntetiska."
+  },
+  "sprakdriften": {
+    "title": "Språkdriften",
+    "tagline": "Samma fråga på olika språk — olika svar",
+    "intro": "AI-svar är inte neutrala informationsobjekt. De är språkligt och kulturellt situerade. Språkdriften ställer samma svenska fråga på flera språk och visar vad som observeras variera: ton, ramverk, institutioner som nämns, riskbedömningar. Det är observerade variationer — inte uttalanden om mätbar bias.",
+    "chooseFeatured": "Välj ett färdigt exempel",
+    "run": "Kör exemplet",
+    "running": "Kör…",
+    "cached": "Från cache",
+    "live": "Genererat live",
+    "queued": "Köad",
+    "failed": "Misslyckades",
+    "waitingForResult": "Väntar på resultat från modellen. Första körningen tar upp till en minut.",
+    "questionLabel": "Fråga (svenska)",
+    "answersTitle": "Svar per språk",
+    "differencesTitle": "Observerade skillnader",
+    "noDifferences": "Inga tydliga skillnader observerades.",
+    "methodsTitle": "Metod",
+    "method_question": "Ursprunglig fråga",
+    "method_languages": "Språk",
+    "method_style": "Stil",
+    "method_model": "Modellprofil",
+    "method_promptVersions": "Prompt-versioner",
+    "method_runId": "Kör-ID",
+    "dirDisclaimer": "Detta är observerade variationer på text, inte ett vetenskapligt mått på bias.",
+    "backToHome": "Tillbaka"
   }
 }

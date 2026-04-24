@@ -17,5 +17,31 @@
       }
     },
     "disclaimer": "These demos illustrate opportunities and risks for AI in the democratic information environment. They are not voting advisors, campaign tools, or automated decision support. All synthetic examples are labelled as synthetic."
+  },
+  "sprakdriften": {
+    "title": "The Language Drift",
+    "tagline": "Same question, different languages — different answers",
+    "intro": "AI responses are not neutral information objects. They are linguistically and culturally situated. Språkdriften asks the same Swedish political question in several languages and shows what observably varies: tone, framing, institutions mentioned, risk posture. These are observed variations — not claims of measurable bias.",
+    "chooseFeatured": "Pick a featured example",
+    "run": "Run example",
+    "running": "Running…",
+    "cached": "From cache",
+    "live": "Generated live",
+    "queued": "Queued",
+    "failed": "Failed",
+    "waitingForResult": "Waiting for the model. The first run can take up to a minute.",
+    "questionLabel": "Question (Swedish)",
+    "answersTitle": "Answers by language",
+    "differencesTitle": "Observed differences",
+    "noDifferences": "No meaningful differences were observed.",
+    "methodsTitle": "Methods",
+    "method_question": "Original question",
+    "method_languages": "Languages",
+    "method_style": "Style",
+    "method_model": "Model profile",
+    "method_promptVersions": "Prompt versions",
+    "method_runId": "Run id",
+    "dirDisclaimer": "These are observed textual variations, not a scientific measure of bias.",
+    "backToHome": "Back"
   }
 }

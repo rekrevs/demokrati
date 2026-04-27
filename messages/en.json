@@ -70,5 +70,60 @@
     "backToDemo": "Back to examples",
     "dirDisclaimer": "These are observed textual variations, not a scientific measure of bias. Tone and certainty labels are heuristic — see the methods panel.",
     "backToHome": "Back"
+  },
+  "riksdagsradarn": {
+    "title": "The Riksdag Radar",
+    "tagline": "What did parliament say about a topic, who said it, and how do the parties differ?",
+    "intro": "The Riksdag Radar searches actual speeches from the Swedish parliament, groups them by party, and summarises the debate. Every claim is linked back to the exact text segment so you can check what was actually said.",
+    "chooseFeatured": "Pick a featured example",
+    "run": "Run example",
+    "running": "Analysing…",
+    "failed": "Failed",
+    "queued": "Queued",
+    "waitingForResult": "Retrieving relevant speeches, extracting claims, and building summaries. The first run takes about a minute.",
+    "statusLabel": "Status",
+    "backToDemo": "Back to examples",
+    "dateRange": "{from} – {to}",
+    "totalAnforanden": "{n, plural, =0 {no speeches} =1 {1 speech} other {# speeches}}",
+    "summariesTitle": "Summaries",
+    "regimeLabels": {
+      "neutral": "Neutral overview",
+      "conflict": "Conflict lines",
+      "citizen": "Citizen view"
+    },
+    "regimeBlurbs": {
+      "neutral": "Fact-oriented summary, even-handed.",
+      "conflict": "Foregrounds where parties disagree and who is criticising whom.",
+      "citizen": "What the debate means for an ordinary citizen, in plain language."
+    },
+    "conflictLinesTitle": "Conflict lines",
+    "partyPositionsTitle": "By party",
+    "claimsHeader": "{n, plural, =1 {1 claim} other {# claims}}",
+    "sourceCardsTitle": "{n, plural, =1 {1 source} other {# sources}}",
+    "claimTypes": {
+      "empirical": "fact",
+      "normative": "value",
+      "critique": "critique",
+      "proposal": "proposal"
+    },
+    "confidenceLabels": {
+      "low": "low",
+      "medium": "medium",
+      "high": "high"
+    },
+    "jumpToSource": "Go to source",
+    "methodsTitle": "Methods",
+    "method_topic": "Topic",
+    "method_dateRange": "Date range",
+    "method_anforanden": "Speeches",
+    "method_chunks": "Text segments",
+    "method_runId": "Run id",
+    "method_claimTypeExplainer": "Claim types",
+    "method_claimTypeExplainerBody": "Each claim is tagged as fact (empirical claim about how things are), value (normative claim about how things should be), critique (criticism of another actor or policy), or proposal (concrete recommendation or demand).",
+    "method_confidenceExplainer": "Confidence",
+    "method_confidenceExplainerBody": "High = direct quote or near-paraphrase with multiple corroborating segments. Medium = one strong supporting segment. Low = inference beyond what the segments explicitly say.",
+    "emptyResultTitle": "No relevant speeches",
+    "emptyResultBody": "The search found no parliamentary speeches matching the topic and date range in the ingested corpus. Try a wider date range or different topic.",
+    "dirDisclaimer": "Summaries are AI-generated. Every claim is linked to source text — always verify against the original for sensitive interpretations. Source: the Riksdag of Sweden (open data)."
   }
 }

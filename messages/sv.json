@@ -70,5 +70,60 @@
     "backToDemo": "Tillbaka till exempel",
     "dirDisclaimer": "Detta är observerade variationer på text, inte ett vetenskapligt mått på bias. Etiketter för ton och säkerhet är heuristiska — se metodrutan.",
     "backToHome": "Tillbaka"
+  },
+  "riksdagsradarn": {
+    "title": "Riksdagsradarn",
+    "tagline": "Vad sa riksdagen om en fråga, vem sa det, och hur skiljer sig partierna åt?",
+    "intro": "Riksdagsradarn söker bland verkliga anföranden från Sveriges riksdag, grupperar dem per parti och sammanfattar diskussionen. Varje påstående är länkat tillbaka till exakta textstycken så att du kan kontrollera vad som faktiskt sades.",
+    "chooseFeatured": "Välj ett färdigt exempel",
+    "run": "Kör exemplet",
+    "running": "Analyserar…",
+    "failed": "Misslyckades",
+    "queued": "Köad",
+    "waitingForResult": "Hämtar relevanta anföranden, extraherar påståenden och bygger sammanfattningar. Första körningen tar ungefär en minut.",
+    "statusLabel": "Status",
+    "backToDemo": "Tillbaka till exempel",
+    "dateRange": "{from} – {to}",
+    "totalAnforanden": "{n, plural, =0 {inga anföranden} =1 {1 anförande} other {# anföranden}}",
+    "summariesTitle": "Sammanfattningar",
+    "regimeLabels": {
+      "neutral": "Neutral översikt",
+      "conflict": "Konfliktlinjer",
+      "citizen": "För medborgaren"
+    },
+    "regimeBlurbs": {
+      "neutral": "Faktaorienterad sammanfattning utan retorisk lutning.",
+      "conflict": "Lyfter fram var partierna är oense och vem som kritiserar vem.",
+      "citizen": "Vad debatten betyder för en medborgare, i vardaglig svenska."
+    },
+    "conflictLinesTitle": "Konfliktlinjer",
+    "partyPositionsTitle": "Per parti",
+    "claimsHeader": "{n, plural, =1 {1 påstående} other {# påståenden}}",
+    "sourceCardsTitle": "{n, plural, =1 {1 källa} other {# källor}}",
+    "claimTypes": {
+      "empirical": "fakta",
+      "normative": "värdering",
+      "critique": "kritik",
+      "proposal": "förslag"
+    },
+    "confidenceLabels": {
+      "low": "låg",
+      "medium": "medel",
+      "high": "hög"
+    },
+    "jumpToSource": "Gå till källa",
+    "methodsTitle": "Metod",
+    "method_topic": "Ämne",
+    "method_dateRange": "Datumintervall",
+    "method_anforanden": "Antal anföranden",
+    "method_chunks": "Antal textsegment",
+    "method_runId": "Kör-ID",
+    "method_claimTypeExplainer": "Påståendetyper",
+    "method_claimTypeExplainerBody": "Varje påstående är märkt som fakta (empiriskt påstående om hur saker är), värdering (normativt påstående om hur det bör vara), kritik (kritik mot annan aktör eller politik) eller förslag (konkret rekommendation eller krav).",
+    "method_confidenceExplainer": "Säkerhet",
+    "method_confidenceExplainerBody": "Hög = direkt citat eller näraomskrivning, flera stödjande textsegment. Medel = ett starkt stödjande textsegment. Låg = inferens som går utöver det textsegmenten direkt säger.",
+    "emptyResultTitle": "Inga relevanta anföranden",
+    "emptyResultBody": "Sökningen hittade inga riksdagsanföranden som matchade ämne och tidsintervall i den ingjorda korpusen. Prova ett bredare datumintervall eller ett annat ämne.",
+    "dirDisclaimer": "Sammanfattningarna är AI-genererade. Varje påstående är länkat till källtext — kontrollera alltid mot originalet vid känsliga tolkningar. Källa: Sveriges riksdag (öppna data)."
   }
 }

@@ -15,10 +15,10 @@ export * from "./cache-key";
  */
 import { registerDemo } from "./registry";
 import { sprakdriften } from "./sprakdriften";
+import { riksdagsradarn } from "./riksdagsradarn";
 
-let registered = false;
 export function registerAllDemos(): void {
-  if (registered) return;
+  // registerDemo is idempotent — safe across HMR + multiple entry points.
   registerDemo(sprakdriften as Parameters<typeof registerDemo>[0]);
-  registered = true;
+  registerDemo(riksdagsradarn as Parameters<typeof registerDemo>[0]);
 }

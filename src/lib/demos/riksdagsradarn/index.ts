@@ -45,7 +45,10 @@ export const riksdagsradarn: DemoModule<
     input: RiksdagsradarnInput,
     ctx: DemoRunContext,
   ): Promise<RiksdagsradarnOutput> {
-    return runRiksdagsradarnPipeline(input, { log: ctx.log });
+    return runRiksdagsradarnPipeline(input, {
+      log: ctx.log,
+      setProgress: ctx.setProgress,
+    });
   },
 
   renderMeta(output) {

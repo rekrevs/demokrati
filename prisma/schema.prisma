@@ -105,6 +105,7 @@ model Run {
   tokenOut        Int       @default(0)
   providerSummary Json?
   cacheKey        String?
+  progress        Json?
   createdAt       DateTime  @default(now())
 
   demo      Demo       @relation(fields: [demoSlug], references: [slug], onDelete: Cascade)

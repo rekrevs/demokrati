@@ -30,12 +30,20 @@ import { SourceCard } from "./source-card";
 
 type RunStatus = "QUEUED" | "RUNNING" | "COMPLETED" | "FAILED" | "UNKNOWN";
 
+interface ProgressInfo {
+  phase: string;
+  message: string;
+  data?: Record<string, unknown>;
+  updatedAt?: string;
+}
+
 interface State {
   status: RunStatus;
   output: RiksdagsradarnOutput | null;
   error: string | null;
   startedAt: string | null;
   completedAt: string | null;
+  progress: ProgressInfo | null;
 }
 
 const INITIAL: State = {
@@ -44,7 +52,16 @@ const INITIAL: State = {
   error: null,
   startedAt: null,
   completedAt: null,
+  progress: null,
 };
+
+const PHASE_ORDER: readonly string[] = [
+  "retrieving",
+  "retrieved",
+  "extracting_claims",
+  "summarising",
+  "finalising",
+];
 
 export function RunView({ runId }: { runId: string }) {
   const t = useTranslations("riksdagsradarn");
@@ -75,6 +92,7 @@ export function RunView({ runId }: { runId: string }) {
           completedAt: string | null;
           output: RiksdagsradarnOutput | null;
           error: { message?: string } | null;
+          progress: ProgressInfo | null;
         };
         if (cancelled) return;
         setState({
@@ -83,6 +101,7 @@ export function RunView({ runId }: { runId: string }) {
           error: data.error?.message ?? null,
           startedAt: data.startedAt,
           completedAt: data.completedAt,
+          progress: data.progress ?? null,
         });
         if (data.status === "COMPLETED" || data.status === "FAILED") return;
         if (Date.now() - start > 240_000) {
@@ -153,15 +172,7 @@ export function RunView({ runId }: { runId: string }) {
       ) : null}
 
       {state.status !== "COMPLETED" && state.status !== "FAILED" ? (
-        <Card>
-          <CardHeader>
-            <CardTitle>{t("waitingForResult")}</CardTitle>
-            <CardDescription>
-              {t("statusLabel")}:{" "}
-              {state.status === "UNKNOWN" ? "…" : state.status}
-            </CardDescription>
-          </CardHeader>
-        </Card>
+        <ProgressPanel state={state} />
       ) : null}
 
       {state.output && state.output.emptyResult ? (
@@ -175,6 +186,69 @@ export function RunView({ runId }: { runId: string }) {
         <ResultBody output={state.output} runId={runId} />
       ) : null}
     </main>
+  );
+}
+
+function ProgressPanel({ state }: { state: State }) {
+  const t = useTranslations("riksdagsradarn");
+  const startedAtMs = state.startedAt
+    ? new Date(state.startedAt).getTime()
+    : null;
+  const [elapsed, setElapsed] = React.useState<number>(0);
+  React.useEffect(() => {
+    if (!startedAtMs) return;
+    const id = window.setInterval(() => {
+      setElapsed(Math.max(0, Math.round((Date.now() - startedAtMs) / 1000)));
+    }, 1000);
+    return () => window.clearInterval(id);
+  }, [startedAtMs]);
+
+  const progress = state.progress;
+  const phaseIdx = progress
+    ? PHASE_ORDER.indexOf(progress.phase)
+    : -1;
+  const labelKey = progress
+    ? `progressPhases.${progress.phase}`
+    : "waitingForResult";
+  const phaseLabel = progress ? t(labelKey) : t("waitingForResult");
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base">{phaseLabel}</CardTitle>
+        <CardDescription>
+          {progress?.message ?? t("waitingForResult")}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        <ol className="space-y-1 text-sm">
+          {PHASE_ORDER.map((p, i) => {
+            const done = phaseIdx >= 0 && i < phaseIdx;
+            const active = phaseIdx === i;
+            return (
+              <li
+                key={p}
+                className={
+                  done
+                    ? "text-muted-foreground line-through"
+                    : active
+                      ? "font-medium text-foreground"
+                      : "text-muted-foreground"
+                }
+              >
+                {active ? "› " : done ? "✓ " : "· "}
+                {t(`progressPhases.${p}`)}
+              </li>
+            );
+          })}
+        </ol>
+        <div className="text-xs text-muted-foreground">
+          {t("statusLabel")}:{" "}
+          {state.status === "UNKNOWN" ? "…" : state.status}
+          {startedAtMs ? ` · ${elapsed}s` : ""}
+        </div>
+      </CardContent>
+    </Card>
   );
 }
 

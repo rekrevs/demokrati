@@ -5,7 +5,11 @@ import {
   hybridRetrieve,
   type RiksdagHit,
 } from "@/lib/retrieval/riksdag";
-import { analysePrompt, PROMPT_VERSIONS } from "./prompts";
+import {
+  claimsPrompt,
+  narrativesPrompt,
+  PROMPT_VERSIONS,
+} from "./prompts";
 import {
   riksdagsradarnOutputSchema,
   type RiksdagsradarnInput,
@@ -15,9 +19,14 @@ import {
 
 export interface PipelineDeps {
   log?: (event: string, data?: unknown) => void;
+  setProgress?: (update: {
+    phase: string;
+    message: string;
+    data?: Record<string, unknown>;
+  }) => Promise<void>;
 }
 
-const llmOutputSchema = z.object({
+const claimsOutputSchema = z.object({
   partyPositions: z
     .array(
       z.object({
@@ -36,6 +45,9 @@ const llmOutputSchema = z.object({
       }),
     )
     .min(0),
+});
+
+const narrativesOutputSchema = z.object({
   conflictLines: z.array(z.string()),
   summaries: z.object({
     neutral: z.string(),
@@ -49,7 +61,13 @@ export async function runRiksdagsradarnPipeline(
   deps: PipelineDeps = {},
 ): Promise<RiksdagsradarnOutput> {
   const log = deps.log ?? (() => undefined);
+  const setProgress = deps.setProgress ?? (async () => undefined);
   log("start", { topic: input.topic, range: [input.dateFrom, input.dateTo] });
+
+  await setProgress({
+    phase: "retrieving",
+    message: `Söker i indexerade riksdagsanföranden för "${input.topic}"…`,
+  });
 
   const dateFrom = startOfDayUtc(input.dateFrom);
   const dateTo = endOfDayUtc(input.dateTo);
@@ -62,6 +80,11 @@ export async function runRiksdagsradarnPipeline(
     limit: input.retrievalLimit,
   });
   log("retrieved", { count: hits.length });
+  await setProgress({
+    phase: "retrieved",
+    message: `Hittade ${hits.length} relevanta textsegment`,
+    data: { hitCount: hits.length },
+  });
 
   if (hits.length === 0) {
     return riksdagsradarnOutputSchema.parse({
@@ -84,49 +107,87 @@ export async function runRiksdagsradarnPipeline(
 
   const sourceCards = hits.map(hitToSourceCard);
   const validChunkIds = new Set(hits.map((h) => h.chunkId));
-
   const grouped = groupHitsByParty(hits);
   const router = getRouter();
-  const { system, user } = analysePrompt({
+
+  // ── Pass 1: extract claims and per-party summaries ─────────────────
+  await setProgress({
+    phase: "extracting_claims",
+    message: `Extraherar typade påståenden från ${grouped.length} partier…`,
+    data: { partyCount: grouped.length, hitCount: hits.length },
+  });
+
+  const claimsArgs = claimsPrompt({
     topic: input.topic,
     dateFrom: input.dateFrom,
     dateTo: input.dateTo,
     hitsByParty: grouped,
   });
-
-  const llmRes = await router.json(
+  const claimsRes = await router.json(
     "strong",
     {
-      system,
-      messages: [{ role: "user", content: user }],
+      system: claimsArgs.system,
+      messages: [{ role: "user", content: claimsArgs.user }],
       temperature: 0.2,
-      maxTokens: 12000,
+      maxTokens: 6000,
     },
-    llmOutputSchema,
+    claimsOutputSchema,
   );
-  log("analysed", {
-    parties: llmRes.data.partyPositions.length,
-    claims: llmRes.data.partyPositions.reduce(
-      (sum, p) => sum + p.claims.length,
-      0,
-    ),
-    conflictLines: llmRes.data.conflictLines.length,
+  const sanitisedPositions = claimsRes.data.partyPositions
+    .map((p) => ({
+      parti: p.parti,
+      summary: p.summary,
+      claims: p.claims
+        .map((c) => ({
+          ...c,
+          sourceChunkIds: c.sourceChunkIds.filter((id) =>
+            validChunkIds.has(id),
+          ),
+        }))
+        .filter((c) => c.sourceChunkIds.length > 0),
+    }))
+    .filter((p) => p.summary.length > 0 || p.claims.length > 0);
+  log("claims_extracted", {
+    parties: sanitisedPositions.length,
+    claims: sanitisedPositions.reduce((s, p) => s + p.claims.length, 0),
   });
 
-  // Filter out any chunk ids the model invented and warn rather than fail.
-  const sanitisedPositions = llmRes.data.partyPositions.map((p) => ({
-    parti: p.parti,
-    summary: p.summary,
-    claims: p.claims
-      .map((c) => ({
-        ...c,
-        sourceChunkIds: c.sourceChunkIds.filter((id) => validChunkIds.has(id)),
-      }))
-      .filter((c) => c.sourceChunkIds.length > 0),
-  }));
+  // ── Pass 2: conflict lines + three narrative summary regimes ───────
+  await setProgress({
+    phase: "summarising",
+    message: "Skriver tre sammanfattningsregimer…",
+    data: { partyCount: sanitisedPositions.length },
+  });
 
-  // anforandeId is on source_docs.externalId; we use sourceDocId as the
-  // canonical identity in retrieval results.
+  const narrArgs = narrativesPrompt({
+    topic: input.topic,
+    dateFrom: input.dateFrom,
+    dateTo: input.dateTo,
+    partyPositions: sanitisedPositions.map((p) => ({
+      parti: p.parti,
+      summary: p.summary,
+      claimCount: p.claims.length,
+    })),
+  });
+  const narrRes = await router.json(
+    "strong",
+    {
+      system: narrArgs.system,
+      messages: [{ role: "user", content: narrArgs.user }],
+      temperature: 0.2,
+      maxTokens: 3000,
+    },
+    narrativesOutputSchema,
+  );
+  log("narratives_done", {
+    conflictLines: narrRes.data.conflictLines.length,
+  });
+
+  await setProgress({
+    phase: "finalising",
+    message: "Sammanställer resultat…",
+  });
+
   const totalAnforanden = new Set(hits.map((h) => h.sourceDocId)).size;
 
   return riksdagsradarnOutputSchema.parse({
@@ -135,8 +196,8 @@ export async function runRiksdagsradarnPipeline(
     dateTo: input.dateTo,
     totalAnforanden,
     partyPositions: sanitisedPositions,
-    conflictLines: llmRes.data.conflictLines,
-    summaries: llmRes.data.summaries,
+    conflictLines: narrRes.data.conflictLines,
+    summaries: narrRes.data.summaries,
     sourceCards,
     emptyResult: false,
   });

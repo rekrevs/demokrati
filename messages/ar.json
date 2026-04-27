@@ -81,6 +81,13 @@
     "failed": "فشل",
     "queued": "في الطابور",
     "waitingForResult": "يجلب الخطابات ذات الصلة ويستخرج الادعاءات ويبني الملخصات. الجولة الأولى تستغرق نحو دقيقة.",
+    "progressPhases": {
+      "retrieving": "يبحث في الفهرس",
+      "retrieved": "نتائج البحث جاهزة",
+      "extracting_claims": "يستخرج الادعاءات",
+      "summarising": "يكتب الملخصات",
+      "finalising": "يجمع النتائج"
+    },
     "statusLabel": "الحالة",
     "backToDemo": "العودة إلى الأمثلة",
     "dateRange": "{from} – {to}",

@@ -81,6 +81,13 @@
     "failed": "Failed",
     "queued": "Queued",
     "waitingForResult": "Retrieving relevant speeches, extracting claims, and building summaries. The first run takes about a minute.",
+    "progressPhases": {
+      "retrieving": "Searching the index",
+      "retrieved": "Search results ready",
+      "extracting_claims": "Extracting claims",
+      "summarising": "Writing summaries",
+      "finalising": "Finalising"
+    },
     "statusLabel": "Status",
     "backToDemo": "Back to examples",
     "dateRange": "{from} – {to}",

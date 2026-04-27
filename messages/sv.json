@@ -81,6 +81,13 @@
     "failed": "Misslyckades",
     "queued": "Köad",
     "waitingForResult": "Hämtar relevanta anföranden, extraherar påståenden och bygger sammanfattningar. Första körningen tar ungefär en minut.",
+    "progressPhases": {
+      "retrieving": "Söker i indexet",
+      "retrieved": "Sökresultat klara",
+      "extracting_claims": "Extraherar påståenden",
+      "summarising": "Skriver sammanfattningar",
+      "finalising": "Sammanställer resultat"
+    },
     "statusLabel": "Status",
     "backToDemo": "Tillbaka till exempel",
     "dateRange": "{from} – {to}",

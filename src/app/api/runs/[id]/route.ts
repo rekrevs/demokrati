@@ -19,6 +19,7 @@ export async function GET(
     completedAt: run.completedAt,
     output: run.outputJson,
     error: run.errorJson,
+    progress: run.progress,
     cached: false,
   });
 }

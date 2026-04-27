@@ -4,10 +4,22 @@ export type RunMode = "FEATURED" | "EXPLORE" | "STAGE";
 export type Visibility = "public" | "beta" | "hidden";
 export type RiskLevel = "low" | "medium" | "high";
 
+export interface ProgressUpdate {
+  phase: string;
+  message: string;
+  /** Optional structured payload (counts, partial results, etc.). */
+  data?: Record<string, unknown>;
+}
+
 export interface DemoRunContext {
   runId: string;
   mode: RunMode;
   log: (event: string, data?: unknown) => void;
+  /**
+   * Persist a progress update on the run record. Safe to call any number
+   * of times; UI polls and reflects the latest one.
+   */
+  setProgress: (update: ProgressUpdate) => Promise<void>;
   signal: AbortSignal;
 }
 

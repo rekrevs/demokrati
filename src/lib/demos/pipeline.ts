@@ -113,6 +113,17 @@ export async function executeRun(runId: string): Promise<unknown> {
       log: (event, data) => {
         console.log(`[run:${runId}] ${event}`, data ?? "");
       },
+      setProgress: async (update) => {
+        await prisma.run.update({
+          where: { id: runId },
+          data: {
+            progress: {
+              ...update,
+              updatedAt: new Date().toISOString(),
+            } as Prisma.InputJsonValue,
+          },
+        });
+      },
       signal: controller.signal,
     };
 

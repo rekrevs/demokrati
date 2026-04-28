@@ -125,9 +125,12 @@ function DemoCard({
   );
 
   if (!built) return card;
+  // typedRoutes generates a Route type from /demo/[slug]/page.tsx, but
+  // <Link> at runtime requires an already-expanded path. Pass the
+  // concrete path string (next-intl prepends the locale).
   return (
     <Link
-      href={{ pathname: "/demo/[slug]", params: { slug } } as never}
+      href={`/demo/${slug}` as never}
       className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-2xl"
     >
       {card}

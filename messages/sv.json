@@ -16,7 +16,43 @@
         "description": "Hur AI själv måste formas av demokratiska principer."
       }
     },
-    "disclaimer": "Dessa demos visar möjligheter och risker med AI i demokratins informationsmiljö. De är inte röstningsrådgivare, kampanjverktyg eller automatiserade beslutsstöd. Alla syntetiska exempel är märkta som syntetiska."
+    "intro": "Sju demos om AI som demokratisk lins, påverkansmotor och styrningsobjekt. Klicka ett demo som är klart — de planerade syns som platshållare med kort beskrivning.",
+    "disclaimer": "Dessa demos visar möjligheter och risker med AI i demokratins informationsmiljö. De är inte röstningsrådgivare, kampanjverktyg eller automatiserade beslutsstöd. Alla syntetiska exempel är märkta som syntetiska.",
+    "status": {
+      "built": "Klar",
+      "coming": "Kommer",
+      "builtCount": "{built} av {total} demos klara"
+    }
+  },
+  "demoCatalog": {
+    "riksdagsradarn": {
+      "title": "Riksdagsradarn",
+      "tagline": "Spårbar sammanfattning av riksdagsdebatter — varje påstående länkat till exakt textstycke."
+    },
+    "oenighetskartan": {
+      "title": "Oenighetskartan",
+      "tagline": "Vad handlar oenigheten egentligen om — fakta, värdering, risk eller tillit?"
+    },
+    "oppenhetsparadoxen": {
+      "title": "Öppenhetsparadoxen",
+      "tagline": "När staten görs begriplig — vad förändras och vad förloras?"
+    },
+    "sprakdriften": {
+      "title": "Språkdriften",
+      "tagline": "Samma fråga på olika språk — olika svar. Vad observerar vi varierar?"
+    },
+    "programkompassen": {
+      "title": "Programkompassen",
+      "tagline": "Hur partiernas program översätts till positioner i konkreta sakfrågor."
+    },
+    "persuasionmaskinen": {
+      "title": "Persuasionmaskinen",
+      "tagline": "Personaliserad politisk påverkan i skala — billigare och mer osynligt med AI."
+    },
+    "ai-konstitutionen": {
+      "title": "AI-konstitutionen",
+      "tagline": "Publiken röstar fram regler för hur en AI-assistent ska svara på politiska frågor."
+    }
   },
   "sprakdriften": {
     "title": "Språkdriften",

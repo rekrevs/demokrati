@@ -16,7 +16,43 @@
         "description": "How AI itself must be shaped by democratic principles."
       }
     },
-    "disclaimer": "These demos illustrate opportunities and risks for AI in the democratic information environment. They are not voting advisors, campaign tools, or automated decision support. All synthetic examples are labelled as synthetic."
+    "intro": "Seven demos about AI as democratic lens, engine of influence, and object of governance. Click any built demo — planned ones appear as placeholders with a short description.",
+    "disclaimer": "These demos illustrate opportunities and risks for AI in the democratic information environment. They are not voting advisors, campaign tools, or automated decision support. All synthetic examples are labelled as synthetic.",
+    "status": {
+      "built": "Live",
+      "coming": "Coming",
+      "builtCount": "{built} of {total} demos shipped"
+    }
+  },
+  "demoCatalog": {
+    "riksdagsradarn": {
+      "title": "The Riksdag Radar",
+      "tagline": "Traceable summary of parliamentary debates — every claim linked to the exact paragraph."
+    },
+    "oenighetskartan": {
+      "title": "The Disagreement Map",
+      "tagline": "What is the disagreement actually about — facts, values, risk, or trust?"
+    },
+    "oppenhetsparadoxen": {
+      "title": "The Openness Paradox",
+      "tagline": "When the state is made intelligible — what changes and what is lost?"
+    },
+    "sprakdriften": {
+      "title": "The Language Drift",
+      "tagline": "Same question, different languages — different answers. What observably varies?"
+    },
+    "programkompassen": {
+      "title": "The Programme Compass",
+      "tagline": "How party programmes translate into positions on concrete policy questions."
+    },
+    "persuasionmaskinen": {
+      "title": "The Persuasion Engine",
+      "tagline": "Personalised political influence at scale — cheaper and more invisible with AI."
+    },
+    "ai-konstitutionen": {
+      "title": "The AI Constitution",
+      "tagline": "The audience votes on rules for how an AI assistant should answer political questions."
+    }
   },
   "sprakdriften": {
     "title": "The Language Drift",

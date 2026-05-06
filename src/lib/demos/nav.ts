@@ -15,11 +15,11 @@ export interface DemoNavEntry {
 export const DEMO_NAV: readonly DemoNavEntry[] = [
   { slug: "riksdagsradarn", act: 1, status: "built" },
   { slug: "oenighetskartan", act: 1, status: "built" },
-  { slug: "oppenhetsparadoxen", act: 1, status: "coming" },
+  { slug: "oppenhetsparadoxen", act: 1, status: "built" },
   { slug: "sprakdriften", act: 2, status: "built" },
-  { slug: "programkompassen", act: 2, status: "coming" },
-  { slug: "persuasionmaskinen", act: 2, status: "coming" },
-  { slug: "ai-konstitutionen", act: 3, status: "coming" },
+  { slug: "programkompassen", act: 2, status: "built" },
+  { slug: "persuasionmaskinen", act: 2, status: "built" },
+  { slug: "ai-konstitutionen", act: 3, status: "built" },
 ] as const;
 
 export function demosByAct(act: DemoAct): DemoNavEntry[] {
